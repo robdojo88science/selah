@@ -1,0 +1,9 @@
+{
+  "translation": "World English Bible, Protestant Edition",
+  "source": "https://ebible.org/Scriptures/engwebp_usfm.zip",
+  "license": "Public domain",
+  "licenseURL": "https://ebible.org/engwebp/copyright.htm",
+  "downloaded": "2026-11-09",
+  "sha256": "a93df5571009fed56f77e3ac1d3ce71c9a3a3df1486f7570cc7a8f823192fdba",
+  "notes": "USFM formatting annotations and headings omitted; verse text and numbering retained. Footnotes preserved separately, including text-critical notes for verses with no main text. Rebuild with npm run import-bible."
+}
