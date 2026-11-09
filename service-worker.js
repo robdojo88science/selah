@@ -1,4 +1,4 @@
-const PREFIX='selah-'+new URL('./',import.meta.url).pathname; const CACHE=PREFIX+'shell-v1',BIBLE=PREFIX+'bible-v1';
+const PREFIX='selah-'+new URL('./',import.meta.url).pathname; const CACHE=PREFIX+'shell-v2',BIBLE=PREFIX+'bible-v1';
 const scope=new URL('./',import.meta.url);
 const local=p=>new URL(p,scope).href;
 const shell=['./','index.html','css/style.css','js/app.js','js/core.js','js/ui.js','js/storage.js','js/bible.js','js/devotions.js','js/settings.js','manifest.webmanifest','assets/icons/icon.svg','assets/icons/icon-192.png','assets/icons/icon-512.png','assets/icons/icon-maskable.png','data/bible/catalog.json','data/bible/provenance.json'];
@@ -22,6 +22,7 @@ self.addEventListener('fetch',event=>{
  try{const r=await fetch(event.request);if(r.ok)await cache.put(event.request,r.clone());return r;}catch{if(event.request.mode==='navigate')return (await caches.open(CACHE)).match(local('index.html'));return new Response('Resource unavailable offline',{status:503});}
  })());
 });
+
 
 
 

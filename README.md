@@ -21,7 +21,7 @@ The application is prepared for this repository. The instructions below describe
 2. Exclude node_modules/, source-downloads/ and test-results/; .gitignore handles these with Git.
 3. In GitHub, open Settings → Pages.
 4. Choose Deploy from a branch → main → /(root), then save.
-5. After deployment, the expected address is https://robdojo88science.github.io/selah/ (not a claim of current deployment).
+5. After deployment, the expected address is https://robdojo88science.github.io/selah/ (published GitHub Pages site).
 6. Friends can use the link independently. Each browser stores its own journal.
 
 All asset paths and service worker scope are relative to the application directory. Hash navigation supports refreshes without a server router. GitHub Pages provides HTTPS for service workers.
@@ -34,7 +34,7 @@ All asset paths and service worker scope are relative to the application directo
 - SOAP editor: date, title, reference, selected Scripture, reflection, application, prayer, optional gratitude, automatic drafts, manual completion, reading preview, Markdown export and multiple entries per day.
 - History: full-content search, exact date filter, sorting, month groups, view, edit and confirmed deletion.
 - JSON backup and transactional restore with validation, duplicate skipping and preserved conflicting versions.
-- Warm cream/quiet paper themes and installable PWA where supported.
+- Midnight glass/daylight glass themes and installable PWA where supported.
 
 ## Storage and privacy
 
@@ -144,4 +144,5 @@ See TESTING.md for actual verification results. Viewport checks do not replace p
 ## Limits
 
 No cloud sync, login, encryption, automatic remote backup or reminders. Clipboard and install behavior depends on browser permissions. Avoid editing an entry simultaneously in multiple tabs; the latest write wins. Export files for long-term preservation rather than relying only on browser storage.
+
 

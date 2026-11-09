@@ -9,7 +9,7 @@ export async function backup(){
 }
 export function renderSettings(main){
  main.replaceChildren(heading('A little care for your journal.','Simple preferences and a safe home for your words.'));
- const panel=el('section',{class:'panel reading'}),theme=el('select',{'aria-label':'Color theme'},el('option',{value:'warm',text:'Warm cream'}),el('option',{value:'paper',text:'Quiet paper'}));theme.value=preference('theme','warm');
+ const panel=el('section',{class:'panel reading'}),theme=el('select',{'aria-label':'Color theme'},el('option',{value:'warm',text:'Midnight glass'}),el('option',{value:'paper',text:'Daylight glass'}));theme.value=preference('theme','warm');
  theme.onchange=()=>{document.body.dataset.theme=theme.value;if(!setPreference('theme',theme.value))notify('This browser cannot remember preferences.');};
  const file=el('input',{type:'file',accept:'.json,application/json',id:'import-file'});
  const importButton=button('Review and restore backup',async()=>{
@@ -41,3 +41,4 @@ export function renderSettings(main){
  el('div',{class:'setting'},el('h3',{text:'Scripture & privacy'}),el('p',{text:'World English Bible, Protestant Edition. Public-domain text from eBible.org. No tracking, accounts, or journal uploads. Local storage is private to your browser profile, but it is not encrypted or password protected.'}),el('a',{href:'./data/bible/provenance.json',text:'Bible source and verification record'})));
  main.append(panel);
 }
+

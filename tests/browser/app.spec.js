@@ -99,3 +99,36 @@ test('unavailable browser storage shows honest notice and allows export',async({
  await expect(page.locator('.journal [role=status]')).toContainText('Not saved');
  const pending=page.waitForEvent('download');await page.getByRole('button',{name:'Export this entry'}).click();expect((await pending).suggestedFilename()).toMatch(/\.md$/);
 });
+test('glass themes persist and long journal titles stay within the viewport',async({page})=>{
+ await page.goto('/#settings');await page.getByLabel('Color theme').selectOption('paper');
+ await page.reload();await expect(page.getByLabel('Color theme')).toHaveValue('paper');
+ await page.getByRole('link',{name:'Home',exact:true}).click();
+ await expect(page.locator('body')).toHaveCSS('color','rgb(32, 51, 47)');
+ await expect(page.locator('.verse-card blockquote')).toBeVisible(); await page.screenshot({path:'test-results/selah-daylight.png',fullPage:true});
+ await page.setViewportSize({width:320,height:900});
+ await page.getByRole('link',{name:'My Devotion',exact:true}).click();
+ await page.getByLabel('Devotion Title',{exact:true}).fill('Faith'.repeat(70));
+ await page.getByLabel('Scripture / Bible Passage',{exact:true}).fill('LongReference'.repeat(25));
+ await page.getByRole('button',{name:'Save Devotion',exact:true}).click();
+ await page.getByRole('button',{name:'Preview',exact:true}).click();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.getByRole('link',{name:'Settings',exact:true}).click();await page.getByLabel('Color theme').selectOption('warm');
+ await expect(page.locator('body')).toHaveCSS('color','rgb(242, 244, 247)');
+});
+test('mobile dock leaves save, notices, and Bible actions usable',async({page})=>{
+ await page.setViewportSize({width:375,height:812});await write(page);
+ const dock=await page.locator('nav').boundingBox(),save=page.getByRole('button',{name:'Save Devotion',exact:true});
+ await save.scrollIntoViewIfNeeded();
+ expect(await save.evaluate(e=>{const b=e.getBoundingClientRect();return e.contains(document.elementFromPoint(b.x+b.width/2,b.y+b.height/2));})).toBe(true);
+ await save.click();await expect(page.locator('#status')).not.toBeEmpty();
+ const toast=await page.locator('#status').boundingBox();expect(toast.y+toast.height).toBeLessThan(dock.y);
+ await page.getByRole('link',{name:'Read Bible',exact:true}).click();
+ await page.locator('.verse').first().click();
+ await page.locator('.reader-actions').scrollIntoViewIfNeeded();
+ const actions=await page.locator('.reader-actions').boundingBox();expect(actions.y+actions.height).toBeLessThan(dock.y);
+ for(const a of await page.locator('nav a').all()){
+ const rect=await a.boundingBox();expect(rect.height).toBeGreaterThanOrEqual(44);
+ }
+ await page.getByRole('button',{name:'Use in Devotion'}).click();await expect(page.locator('.journal')).toBeVisible();
+});
+
